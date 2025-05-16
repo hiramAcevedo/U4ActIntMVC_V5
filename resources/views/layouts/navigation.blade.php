@@ -84,8 +84,7 @@
                     
                     @can('admin')
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')" class="flex items-center text-red-500 font-medium">
-                        <i class="fas fa-user-shield mr-1"></i>
-                        <span>{{ __('Admin') }}</span>
+                        <span>{{ __('Administrador') }}</span>
                     </x-nav-link>
                     @endcan
                 </div>
@@ -156,7 +155,7 @@
                         @can('admin')
                         <x-dropdown-link :href="route('admin.dashboard')" class="flex items-center text-red-500 font-medium">
                             <i class="fas fa-user-shield mr-2"></i>
-                            {{ __('Panel de Admin') }}
+                            {{ __('Administrador') }}
                         </x-dropdown-link>
                         @endcan
                         
@@ -219,7 +218,7 @@
             @can('admin')
             <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')" class="flex items-center text-red-500 font-medium">
                 <i class="fas fa-user-shield mr-2"></i>
-                {{ __('Admin') }}
+                {{ __('Administrador') }}
             </x-responsive-nav-link>
             @endcan
         </div>
@@ -240,7 +239,7 @@
                 @can('admin')
                 <x-responsive-nav-link :href="route('admin.dashboard')" class="flex items-center text-red-500 font-medium">
                     <i class="fas fa-user-shield mr-2"></i>
-                    {{ __('Panel de Admin') }}
+                    {{ __('Administrador') }}
                 </x-responsive-nav-link>
                 @endcan
                 

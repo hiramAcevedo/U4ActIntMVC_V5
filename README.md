@@ -1,6 +1,34 @@
-# Hiram U4ActInt - Gestor de Archivos
+# Hiram U4ActInt - Gestor de Archivos e Imágenes
+
+[![Repositorio GitHub](https://img.shields.io/badge/GitHub-Repositorio-blue?logo=github)](https://github.com/hiramAcevedo/U4ActIntMVC_V5)
 
 Una aplicación web para gestionar archivos e imágenes con roles de usuario y administrador, desarrollada con Laravel y Tailwind CSS.
+
+## 🌟 Características
+
+- **Gestión de archivos**: Subir, descargar, visualizar y eliminar archivos
+- **Galería de imágenes**: Con vista previa y ordenamiento por arrastrar y soltar
+- **Sistema de favoritos**: Marcar archivos e imágenes como favoritos
+- **Panel de administración**: Para gestionar usuarios y sus archivos
+- **Autenticación completa**: Registro, inicio de sesión y recuperación de contraseña
+- **Roles de usuario**: Administrador y usuario regular
+- **Exportación de datos**: En formatos Excel, PDF y Word
+- **Diseño responsivo**: Adaptable a dispositivos móviles y escritorio
+
+## 🛠️ Requisitos
+
+- PHP 8.1 o superior
+- Composer
+- Node.js y npm
+- MySQL, PostgreSQL o SQLite
+- Extensiones PHP: BCMath, Ctype, Fileinfo, JSON, Mbstring, OpenSSL, PDO, Tokenizer, XML
+
+## 🔄 Actualizaciones Recientes
+
+- **Sistema de permisos mejorado**: Se implementó AuthServiceProvider con Gate para verificación de roles de administrador
+- **Interfaz de navegación optimizada**: Enlaces de administración más intuitivos y consistentes
+- **Resolución de bugs**: Corrección de errores 404 en rutas de archivos e imágenes
+- **Estructura de almacenamiento**: Mejor organización de archivos con enlaces simbólicos correctamente configurados
 
 ## 🚀 Opciones de Despliegue
 
@@ -24,14 +52,23 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-4. Configura la base de datos en el archivo `.env`
+4. Configura la base de datos en el archivo `.env`:
+```
+DB_CONNECTION=sqlite # o mysql, pgsql
+DB_DATABASE=/ruta/absoluta/a/database.sqlite # para SQLite
+```
 
-5. Ejecuta las migraciones y seeders:
+5. Crea el enlace simbólico para el almacenamiento:
+```bash
+php artisan storage:link
+```
+
+6. Ejecuta las migraciones y seeders:
 ```bash
 php artisan migrate --seed
 ```
 
-6. Inicia los servidores:
+7. Inicia los servidores:
 ```bash
 # Terminal 1: backend
 php artisan serve
@@ -40,7 +77,7 @@ php artisan serve
 npm run dev
 ```
 
-7. Accede a la aplicación: [http://localhost:8000](http://localhost:8000)
+8. Accede a la aplicación: [http://localhost:8000](http://localhost:8000)
 
 ### Despliegue en Railway (Recomendado)
 
@@ -80,27 +117,22 @@ Para una arquitectura separada, puedes:
 - Para desarrollo local, puedes usar SQLite para mayor simplicidad
 - Railway proporciona bases de datos gestionadas que son ideales para proyectos Laravel
 
-### Arquitectura de Despliegue
+### Arquitectura de Almacenamiento de Archivos
 
-Existen varias opciones, cada una con sus ventajas:
+La aplicación almacena archivos en:
+- Imágenes: `storage/app/public/images/`
+- Documentos: `storage/app/public/files/`
 
-1. **Monolítica (Recomendada para principiantes)**
-   - Todo junto en Railway
-   - Simple de configurar y mantener
-
-2. **Separada (Para mejor rendimiento)**
-   - Frontend en Vercel
-   - Backend API en Railway
-   - Base de datos en Railway o servicio especializado
+Es crucial crear el enlace simbólico con `php artisan storage:link` para que estos archivos sean accesibles públicamente.
 
 ## 🔑 Credenciales de Prueba
 
 **Administrador:**
 - Email: admin@example.com
-- Password: password
+- Password: admin123
 
 **Usuario Regular:**
-- Email: user@example.com
+- Email: test@example.com
 - Password: password
 
 ## 📝 Comandos Útiles
@@ -111,11 +143,65 @@ npm run build
 
 # Limpiar caché
 php artisan optimize:clear
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
 
 # Ejecutar pruebas
 php artisan test
+
+# Ver rutas disponibles
+php artisan route:list
+```
+
+## 🔍 Solución de Problemas
+
+### Error 404 en rutas de archivos e imágenes
+1. Verifica que el enlace simbólico esté creado correctamente:
+   ```bash
+   php artisan storage:link
+   ```
+2. Asegúrate de que los directorios tengan permisos adecuados:
+   ```bash
+   chmod -R 775 storage
+   chmod -R 775 bootstrap/cache
+   ```
+3. Comprueba que las rutas en la base de datos apunten correctamente a `storage/images/` o `storage/files/`
+
+### Error de conexión a la base de datos
+1. Verifica las credenciales en el archivo `.env`
+2. Para SQLite, asegúrate de que el archivo exista y tenga permisos correctos
+3. Para MySQL/PostgreSQL, confirma que el servicio esté activo
+
+## 🧪 Estructura de la Aplicación
+
+```
+app/
+├── Http/
+│   ├── Controllers/       # Controladores
+│   │   └── FileController.php  # Gestión de archivos
+│   ├── Middleware/        # Middleware de autenticación y roles
+│   └── Models/            # Modelos
+│       └── UserFile.php   # Modelo para archivos de usuario
+├── ...
+resources/
+├── views/
+│   ├── files/            # Vistas para gestión de archivos
+│   │   ├── index.blade.php
+│   │   └── images.blade.php
+│   └── ...
+storage/app/public/
+    ├── files/            # Almacenamiento de documentos
+    └── images/           # Almacenamiento de imágenes
 ```
 
 ## 📄 Licencia
 
 Este proyecto está licenciado bajo [MIT License](LICENSE).
+
+## 🔗 Enlaces
+
+- [Repositorio en GitHub](https://github.com/hiramAcevedo/U4ActIntMVC_V5)
+- [Documentación de Laravel](https://laravel.com/docs)
+- [Documentación de Tailwind CSS](https://tailwindcss.com/docs)
