@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class FileController extends Controller
 {
@@ -13,7 +14,7 @@ class FileController extends Controller
      */
     public function index(Request $request)
     {
-        $userId = auth()->id();
+        $userId = Auth::id();
         
         // Obtener archivos agrupados por categoría
         $files = UserFile::where('user_id', $userId)->get();
@@ -42,7 +43,7 @@ class FileController extends Controller
      */
     public function images(Request $request)
     {
-        $userId = auth()->id();
+        $userId = Auth::id();
         $images = UserFile::where('user_id', $userId)
                         ->where('is_image', true)
                         ->orderBy('display_order')
@@ -76,7 +77,7 @@ class FileController extends Controller
         ]);
         
         $file = $request->file('fileUpload');
-        $userId = auth()->id();
+        $userId = Auth::id();
         
         // Determinar si es una imagen
         $isImage = strpos($file->getMimeType(), 'image/') === 0;
@@ -120,7 +121,7 @@ class FileController extends Controller
     public function download($id)
     {
         $file = UserFile::findOrFail($id);
-        $userId = auth()->id();
+        $userId = Auth::id();
         
         // Verificar que el usuario actual sea el propietario del archivo
         if ($file->user_id !== $userId) {
@@ -151,7 +152,7 @@ class FileController extends Controller
     public function delete($id)
     {
         $file = UserFile::findOrFail($id);
-        $userId = auth()->id();
+        $userId = Auth::id();
         
         // Verificar que el usuario actual sea el propietario del archivo
         if ($file->user_id !== $userId) {
@@ -181,7 +182,7 @@ class FileController extends Controller
         $file = UserFile::findOrFail($id);
         
         // Verificar que el usuario actual sea el propietario del archivo
-        if ($file->user_id !== auth()->id()) {
+        if ($file->user_id !== Auth::id()) {
             abort(403, 'No tienes permiso para modificar este archivo.');
         }
         

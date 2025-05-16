@@ -132,6 +132,25 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Botón de archivos físicos -->
+            <div class="mt-8 flex justify-center space-x-4">
+                <a href="{{ url('/archivos-fisicos') }}" class="flex items-center justify-center px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-purple-300 button-hover-slide card-shadow">
+                    <i class="fas fa-hdd text-xl mr-2"></i>
+                    <span>Ver Archivos Físicos</span>
+                </a>
+                
+                <!-- Enlaces a las vistas simplificadas -->
+                <a href="{{ route('simple.files') }}" class="flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300 button-hover-slide card-shadow">
+                    <i class="fas fa-file-alt text-xl mr-2"></i>
+                    <span>Archivos Simples</span>
+                </a>
+                
+                <a href="{{ route('simple.images') }}" class="flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-green-300 button-hover-slide card-shadow">
+                    <i class="fas fa-images text-xl mr-2"></i>
+                    <span>Imágenes Simples</span>
+                </a>
+            </div>
         </div>
     </div>
 </x-app-layout>
